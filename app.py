@@ -1,5 +1,5 @@
 """
-Alpha Scout — Streamlit UI
+Alpha Scout: Streamlit UI
 
 This is the main entry point. Run with: streamlit run app.py
 
@@ -352,7 +352,7 @@ init_db()
 
 
 # ---------------------------------------------------------------------------
-# Sidebar — Configuration
+# Sidebar: Configuration
 # ---------------------------------------------------------------------------
 
 with st.sidebar:
@@ -362,14 +362,14 @@ with st.sidebar:
     st.divider()
     
     # ── LOAD PREVIOUS SEARCH ──────────────────────────────────────────────────
-    with st.expander("📂 Load Previous Search", expanded=False):
+    with st.expander("📂 Open a saved search (free)", expanded=False):
         st.caption("*Pick up where you left off*")
         
         recent_searches = list_searches(limit=10)
         if recent_searches:
             # Format search options for display
             search_options = {
-                s["id"]: f"{s['benchmark_label']} — {s['num_results']} results ({s['created_at'][:10]})"
+                s["id"]: f"{s['benchmark_label']}: {s['num_results']} results ({s['created_at'][:10]})"
                 for s in recent_searches
             }
             
@@ -380,7 +380,7 @@ with st.sidebar:
                 key="load_search_select",
             )
             
-            if st.button("📂 Load Search", key="load_search_btn", use_container_width=True):
+            if st.button("📂 Open", key="load_search_btn", use_container_width=True):
                 loaded = load_search(selected_search_id)
                 if loaded:
                     st.session_state.search_results = loaded["search_results"]
@@ -399,17 +399,17 @@ with st.sidebar:
     # ── MODE SELECTOR ──────────────────────────────────────────────────────
     # Primary choice: which pipeline to use. All modes share the same scorer.
     scout_mode = st.radio(
-        "How are you sourcing deals?",
+        "How do you want to find startups?",
         options=list(SCOUT_MODES.keys()),
         format_func=lambda x: SCOUT_MODES[x]["label"],
         key="scout_mode_radio",
-        help="All modes score companies on the same 4 dimensions.",
+        help="Every option scores companies on the same 4 criteria.",
     )
     st.caption(f"*{SCOUT_MODES[scout_mode]['description']}*")
 
     st.divider()
 
-    # Defaults for all modes — overridden in the blocks below
+    # Defaults for all modes: overridden in the blocks below
     benchmark_label = "Scouting"
     custom_attrs = None
     selected_criteria = []
@@ -464,7 +464,7 @@ with st.sidebar:
             st.session_state[f"seed_attrs_{seed_company}"] = {
                 k: seed_data.get(k, "") for k in all_attr_keys
             }
-        with st.expander("📝 Edit Seed Attributes (10 attributes)", expanded=False):
+        with st.expander("📝 Edit the model company (10 details)", expanded=False):
             st.caption("*All 10 attributes drive the eligibility search.*")
             ea = st.session_state[f"seed_attrs_{seed_company}"]
             # Render text_area for long fields, text_input for short ones
@@ -496,14 +496,14 @@ with st.sidebar:
 
     # ── MODE 2: MENA Success Stories ───────────────────────────────────────
     elif scout_mode == "mena_success":
-        st.caption("*Select proven MENA companies — find earlier-stage startups solving similar problems*")
+        st.caption("*Select proven MENA companies: find earlier-stage startups solving similar problems*")
         
         # Option to add custom company
         use_custom_company = st.checkbox("➕ Add a custom company (not in list)", value=False)
         
         if use_custom_company:
             # Custom company entry
-            st.info("📝 **Add a custom benchmark company** — Please fill in all fields for accurate similarity search.")
+            st.info("📝 **Add a custom benchmark company**: Please fill in all fields for accurate similarity search.")
             
             custom_company_name = st.text_input("Company name:", placeholder="e.g., Careem, Souq, Noon")
             
@@ -592,7 +592,7 @@ with st.sidebar:
             for bm_name in selected_benchmarks:
                 bm_info = BENCHMARK_MENA_STARTUPS[bm_name]
                 st.info(
-                    f"**{bm_name}** — {bm_info.get('achieved_stage', 'N/A')}\n\n"
+                    f"**{bm_name}**: {bm_info.get('achieved_stage', 'N/A')}\n\n"
                     f"{bm_info.get('description', '')}"
                 )
         
@@ -606,8 +606,8 @@ with st.sidebar:
         # Override company_size to guide the search toward earlier-stage companies
         stage_hint = {
             "Before Series A": "pre-seed or seed stage, early traction only",
-            "Before Series B": "pre-seed, seed, or Series A — early growth stage",
-            "Before Series C": "seed to Series B — proven model, pre-scale",
+            "Before Series B": "pre-seed, seed, or Series A: early growth stage",
+            "Before Series C": "seed to Series B: proven model, pre-scale",
         }
         
         # Only merge from predefined benchmarks if NOT using custom company
@@ -647,7 +647,7 @@ with st.sidebar:
             help="Choose how to load your inbound candidates.",
         )
         if inbound_source == "demo":
-            st.success("**4 demo candidates loaded** — Halio, Carebot, Naqla, Tarbiyah")
+            st.success("**4 demo candidates loaded**: Halio, Carebot, Naqla, Tarbiyah")
             st.caption("*Simulated MENA startup pitches for demonstration.*")
         elif inbound_source == "websites":
             website_urls_text = st.text_area(
@@ -672,7 +672,7 @@ with st.sidebar:
                 help="Gemini will extract structured data from this text.",
             )
         elif inbound_source == "folder":
-            st.info("📁 **Load from Folder** — Connect to your deal filing system")
+            st.info("📁 **Load from Folder**: Connect to your deal filing system")
             folder_path = st.text_input(
                 "Folder path:",
                 value="",
@@ -685,7 +685,7 @@ with st.sidebar:
 
     st.divider()
 
-    # ── SEARCH FILTERS (Modes 1 & 2 only — inbound skips this) ─────────────
+    # ── SEARCH FILTERS (Modes 1 & 2 only: inbound skips this) ─────────────
     if scout_mode in ["portfolio", "mena_success"]:
         st.markdown("**🎯 Similarity Filters**")
         st.caption("*Which dimensions must match for a company to be eligible?*")
@@ -699,7 +699,7 @@ with st.sidebar:
             "location": "Location",
             "company_size": "Company Size",
         }
-        # 4 moat attributes (unselected by default — advanced filters)
+        # 4 moat attributes (unselected by default: advanced filters)
         MOAT_CRITERIA = {
             "tech_moat": "Tech Moat",
             "tech_stack": "Tech Stack",
@@ -744,7 +744,7 @@ with st.sidebar:
             min_value=5, max_value=100, value=10,
         )
 
-        with st.expander("🔍 Leverage Your Trusted Sources"):
+        with st.expander("🔍 Websites to search"):
             st.caption("*Add or remove sources based on your network and research channels*")
             sources_text = st.text_area(
                 "Sources (one per line):",
@@ -753,7 +753,7 @@ with st.sidebar:
             )
             custom_sources = [s.strip() for s in sources_text.split("\n") if s.strip()]
 
-        with st.expander("📅 Source Freshness Filter"):
+        with st.expander("📅 How recent the articles must be"):
             st.caption("*Only include recent sources to avoid stale information*")
             max_source_age = st.slider(
                 "Maximum source age (days):",
@@ -763,7 +763,7 @@ with st.sidebar:
             show_source_dates = st.checkbox("Show source dates in results", value=True)
         
         with st.expander("👥 Company Size Filter", expanded=True):
-            st.caption("*Filter out large companies — we want early-stage startups*")
+            st.caption("*Filter out large companies: we want early-stage startups*")
             enable_size_filter = st.checkbox(
                 "Enable company size filter",
                 value=True,
@@ -783,7 +783,7 @@ with st.sidebar:
             if enable_size_filter:
                 st.info(f"⚠️ Companies with >{max_employees} employees will be filtered out")
         
-        with st.expander("📍 MENA Location Filter", expanded=True):
+        with st.expander("📍 Region: Middle East and North Africa only", expanded=True):
             st.caption("*Only include companies headquartered in MENA region*")
             mena_only = st.checkbox(
                 "MENA headquarters only",
@@ -793,7 +793,7 @@ with st.sidebar:
             if mena_only:
                 st.info("⚠️ Only companies in UAE, Saudi Arabia, Egypt, Jordan, etc. will be included")
         
-        with st.expander("🚀 Funding Stage Filter", expanded=True):
+        with st.expander("🚀 Latest funding round allowed", expanded=True):
             st.caption("*Only include early-stage companies*")
             max_stage = st.radio(
                 "Maximum funding stage:",
@@ -847,7 +847,7 @@ with st.sidebar:
             if all_excluded_companies:
                 st.warning(f"**Excluding {len(all_excluded_companies)} companies:** {', '.join(all_excluded_companies[:5])}{'...' if len(all_excluded_companies) > 5 else ''}")
         
-        with st.expander("🚫 Information Exclusion"):
+        with st.expander("🚫 Kinds of news to ignore"):
             st.caption("*Exclude news types that signal the opportunity is gone*")
             col1, col2 = st.columns(2)
             with col1:
@@ -874,7 +874,7 @@ with st.sidebar:
             if all_exclusions:
                 st.info(f"**Active exclusions:** {', '.join(all_exclusions[:8])}{'...' if len(all_exclusions) > 8 else ''}")
         
-        with st.expander("🏭 Industry Exclusion Filter"):
+        with st.expander("🏭 Industries to leave out"):
             st.caption("*Exclude companies in specific industries/sectors*")
             excluded_industries_text = st.text_area(
                 "Industries to exclude (one per line):",
@@ -896,7 +896,7 @@ with st.sidebar:
         st.caption("*Filter inbound candidates by location, stage, and size*")
         
         with st.expander("👥 Company Size Filter", expanded=True):
-            st.caption("*Filter out large companies — we want early-stage startups*")
+            st.caption("*Filter out large companies: we want early-stage startups*")
             enable_size_filter = st.checkbox(
                 "Enable company size filter",
                 value=True,
@@ -913,7 +913,7 @@ with st.sidebar:
             if enable_size_filter:
                 st.info(f"⚠️ Companies with >{max_employees} employees will be filtered out")
         
-        with st.expander("📍 MENA Location Filter", expanded=True):
+        with st.expander("📍 Region: Middle East and North Africa only", expanded=True):
             st.caption("*Only include companies headquartered in MENA region*")
             mena_only = st.checkbox(
                 "MENA headquarters only",
@@ -924,7 +924,7 @@ with st.sidebar:
             if mena_only:
                 st.info("⚠️ Only companies in UAE, Saudi Arabia, Egypt, Jordan, etc. will be included")
         
-        with st.expander("🚀 Funding Stage Filter", expanded=True):
+        with st.expander("🚀 Latest funding round allowed", expanded=True):
             st.caption("*Only include early-stage companies*")
             max_stage = st.radio(
                 "Maximum funding stage:",
@@ -943,7 +943,7 @@ with st.sidebar:
             else:
                 st.info("⚠️ Only Pre-seed, Seed, Series A, Series B companies will be included")
         
-        with st.expander("🏭 Industry Exclusion Filter"):
+        with st.expander("🏭 Industries to leave out"):
             st.caption("*Exclude companies in specific industries/sectors*")
             excluded_industries_text = st.text_area(
                 "Industries to exclude (one per line):",
@@ -960,7 +960,7 @@ with st.sidebar:
     st.divider()
 
     # --- Scoring Weights & Criteria ---
-    st.subheader("2. Import Your Brain")
+    st.subheader("2. Tell it what matters to you")
     st.caption("*Define scoring criteria based on your investment expertise*")
 
     # Default criteria descriptions (editable)
@@ -974,7 +974,7 @@ with st.sidebar:
     weights = {}
     criteria_descriptions = {}
 
-    with st.expander("📝 Customize Scoring Criteria", expanded=False):
+    with st.expander("📝 Edit what each score means", expanded=False):
         st.caption("*Modify what each dimension evaluates based on your expertise*")
         for dim_key, dim_config in SCORING_DIMENSIONS.items():
             criteria_descriptions[dim_key] = st.text_area(
@@ -1005,7 +1005,7 @@ with st.sidebar:
     st.divider()
 
     # --- Load Previous Search ---
-    with st.expander("📂 Saved Searches", expanded=False):
+    with st.expander("📂 Saved searches", expanded=False):
         st.caption("*Resume a previous search session*")
         
         # Quick load by Share ID (from email link)
@@ -1045,7 +1045,7 @@ with st.sidebar:
                 with col1:
                     mode_icon = {"portfolio": "📁", "mena_success": "🌟", "inbound": "📥"}.get(ps["scout_mode"], "📋")
                     share_badge = f"`{ps['share_id']}`" if ps.get('share_id') else ""
-                    st.markdown(f"{mode_icon} **{ps['benchmark_label']}** — {ps['num_results']} results ({ps['grounding_score_avg']:.0%} grounded)")
+                    st.markdown(f"{mode_icon} **{ps['benchmark_label']}**: {ps['num_results']} results ({ps['grounding_score_avg']:.0%} grounded)")
                     st.caption(f"{share_badge} | {ps['created_at']}")
                 with col2:
                     if st.button("Load", key=f"load_{ps['id']}", use_container_width=True):
@@ -1070,7 +1070,7 @@ with st.sidebar:
     # --- Scheduled Searches ---
     with st.expander("📅 Scheduled Searches", expanded=False):
         st.caption("*Automated searches with email reports*")
-        st.warning("🚧 **Coming Soon** — Email scheduling will be enabled in the next release.")
+        st.warning("🚧 **Coming Soon**: Email scheduling will be enabled in the next release.")
         scheduled = get_scheduled_searches()
         if scheduled:
             for ss in scheduled:
@@ -1148,14 +1148,14 @@ with st.sidebar:
     
     # --- Target List ---
     with st.expander("🎯 My Target List", expanded=False):
-        st.caption("*Companies you're tracking — news alerts coming soon*")
+        st.caption("*Companies you're tracking: news alerts coming soon*")
         targets = get_target_list()
         if targets:
             for t in targets:
                 col1, col2 = st.columns([4, 1])
                 with col1:
                     priority_icon = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(t["priority"], "⚪")
-                    st.markdown(f"{priority_icon} **{t['name']}** — {t['sector'] or 'N/A'}")
+                    st.markdown(f"{priority_icon} **{t['name']}**: {t['sector'] or 'N/A'}")
                     st.caption(f"{t['location'] or 'N/A'} | {t['funding_stage'] or 'N/A'} | Added: {t['added_at'][:10]}")
                 with col2:
                     if st.button("🗑️", key=f"rm_target_{t['id']}", help="Remove from list"):
@@ -1168,7 +1168,7 @@ with st.sidebar:
     st.divider()
 
     # --- Action Buttons ---
-    search_button = st.button("🎯 Scout & Analyze", type="primary", use_container_width=True)
+    search_button = st.button("🎯 Scout and score", type="primary", use_container_width=True)
 
     if st.session_state.scoring_complete:
         st.divider()
@@ -1436,7 +1436,7 @@ if search_button:
                     st.session_state.search_complete = True
                     status.update(label=f"✅ Loaded {len(results)} candidates", state="complete")
                 else:
-                    status.update(label="❌ No candidates found — check your input", state="error")
+                    status.update(label="❌ No candidates found: check your input", state="error")
                     st.stop()
             except Exception as e:
                 status.update(label=f"❌ Failed: {e}", state="error")
@@ -1482,7 +1482,7 @@ if search_button:
                 st.session_state.review_result = review
                 st.session_state.review_complete = True
                 status.update(
-                    label=f"✅ Review complete — {review.overall_confidence:.0%} confidence",
+                    label=f"✅ Review complete: {review.overall_confidence:.0%} confidence",
                     state="complete"
                 )
             except Exception as e:
@@ -1507,7 +1507,7 @@ if search_button:
             st.session_state.current_share_id = save_result["share_id"]
             st.session_state.last_search_metadata = save_result  # Store for email function
             st.session_state.show_save_nudge = True
-            st.toast(f"💾 Results saved — Share ID: `{save_result['share_id']}`")
+            st.toast(f"💾 Results saved. Share ID: `{save_result['share_id']}`")
         except Exception as e:
             logger.warning(f"Failed to save search: {e}")
 
@@ -1525,9 +1525,9 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
     ungrounded_count = total_companies - len(grounded_companies)
     
     if ungrounded_count > 0:
-        st.warning(f"⚠️ **Grounding Notice:** {ungrounded_count}/{total_companies} companies have low grounding scores. Only showing verified data — ungrounded scores are nullified.")
+        st.warning(f"⚠️ **Grounding Notice:** {ungrounded_count}/{total_companies} companies have low grounding scores. Only showing verified data: ungrounded scores are nullified.")
     else:
-        st.success(f"✅ **All {total_companies} companies are well-grounded** — data verified against sources.")
+        st.success(f"✅ **All {total_companies} companies are well-grounded**: data verified against sources.")
     
     # Show enrichment quality metrics (from Langfuse evaluations)
     if st.session_state.get("enrichment_metrics"):
@@ -1547,7 +1547,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
             st.caption("*These metrics are logged to Langfuse for tracking enrichment quality over time.*")
 
     # Tabs for different views
-    tab1, tab2, tab3, tab4 = st.tabs([" Comparison Table", "📊 2x2 Matrix", "📝 Detailed Report", "📎 Appendix"])
+    tab1, tab2, tab3, tab4 = st.tabs(["📋 Side by side", "📊 Map of companies", "📝 Short memo", "📎 How each score was checked"])
 
     # --- Tab 1: Comparison Table ---
     with tab1:
@@ -1568,7 +1568,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
         st.markdown(markdown_table)
         
         # Quick links to company websites
-        st.markdown("#### 🔗 Quick Links — Research Further")
+        st.markdown("#### 🔗 Quick Links: Research Further")
         cols = st.columns(min(5, len(scored_companies)))
         for i, company in enumerate(scored_companies[:5]):
             with cols[i]:
@@ -1588,7 +1588,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
 
     # --- Tab 2: 2x2 Matrix ---
     with tab2:
-        st.subheader("Company Positioning Matrix")
+        st.subheader("Where each company sits on two scores")
 
         # Axis selectors
         col1, col2 = st.columns(2)
@@ -1629,7 +1629,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
     # --- Shared section below tabs: Add to Target List ---
     st.markdown("---")
     st.markdown("### 🎯 Add to Target List")
-    st.caption("*Save companies to track — news alerts coming soon*")
+    st.caption("*Save companies to track: news alerts coming soon*")
     
     for company in scored_companies:
         sr = company.search_result
@@ -1639,7 +1639,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
         with col1:
             avg_score = sum(s.score for s in company.scores.values() if s.score) / max(len([s for s in company.scores.values() if s.score]), 1)
             
-            # Build display string — only show location if it exists
+            # Build display string: only show location if it exists
             display_parts = [f"**{sr.name}**"]
             if sr.sector and sr.sector != "Not Found":
                 display_parts.append(sr.sector)
@@ -1658,7 +1658,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                 if source_count > 0:
                     display_parts.append(f"📚 {source_count} sources")
             
-            st.markdown(" — ".join(display_parts))
+            st.markdown(": ".join(display_parts))
         with col2:
             if already_in_list:
                 st.success("✓ Saved", icon="✅")
@@ -1689,7 +1689,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
         
         col1, col2, col3, col4 = st.columns([4, 1, 1, 1])
         with col1:
-            st.markdown(f"**{sr.name}** {website_badge} — Score: {avg_score:.1f}/5")
+            st.markdown(f"**{sr.name}** {website_badge} · Score {avg_score:.1f}/5")
         with col2:
             if st.button("👍", key=f"like_{sr.name}", help="Good result"):
                 save_feedback(
@@ -1713,7 +1713,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                     search_id=st.session_state.get("current_search_id"),
                     company_name=sr.name,
                 )
-                st.toast(f"👎 Thanks — we'll improve!")
+                st.toast(f"👎 Thanks: we'll improve!")
         with col4:
             # Source feedback
             if st.button("📰❌", key=f"bad_source_{sr.name}", help="Bad source"):
@@ -1726,25 +1726,25 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                     search_id=st.session_state.get("current_search_id"),
                     company_name=sr.name,
                 )
-                st.toast(f"📰 Source flagged — thanks!")
+                st.toast(f"📰 Source flagged: thanks!")
 
     # ABSOLUTE GROUNDING: Expandable evidence section per company
     st.markdown("---")
-    st.markdown("### 🔍 Grounded Evidence (Deterministic Proof)")
-    st.caption("*Every claim below is validated via exact string matching — no AI interpretation.*")
+    st.markdown("### 🔍 Evidence: each claim checked against its source")
+    st.caption("*Every claim below is validated via exact string matching: no AI interpretation.*")
     
     for company in scored_companies[:5]:
         sr = company.search_result
         grounding_score = getattr(sr, 'grounding_score', 0.0)
         grounding_icon = "✅" if grounding_score >= 0.7 else "⚠️" if grounding_score >= 0.4 else "❌"
         
-        with st.expander(f"{grounding_icon} **{sr.name}** — Grounding: {grounding_score:.0%}"):
+        with st.expander(f"{grounding_icon} **{sr.name}** · claims found in sources: {grounding_score:.0%}"):
                 # Grounding score banner
                 score_color = "#d4edda" if grounding_score >= 0.7 else "#fff3cd" if grounding_score >= 0.4 else "#f8d7da"
                 st.markdown(f"""
                 <div style="padding: 0.5rem; background-color: {score_color}; border-radius: 0.3rem; margin-bottom: 0.5rem;">
-                    <strong>Grounding Score: {grounding_score:.0%}</strong> — 
-                    {"High confidence" if grounding_score >= 0.7 else "Medium confidence" if grounding_score >= 0.4 else "Low confidence — verify manually"}
+                    <strong>Grounding Score: {grounding_score:.0%}</strong>: 
+                    {"High confidence" if grounding_score >= 0.7 else "Medium confidence" if grounding_score >= 0.4 else "Low confidence: verify manually"}
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -1816,7 +1816,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                             st.markdown(f"- **Page Title:** {page_title[:60]}...")
                     else:
                         error = http_verification.get("error", "Unknown error")
-                        st.markdown(f"- **HTTP Check:** ❌ Website not accessible — {error}")
+                        st.markdown(f"- **HTTP Check:** ❌ Website not accessible: {error}")
                 
                 # Text-based grounding
                 if website_ev:
@@ -1857,7 +1857,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                                 st.success(f"**Evidence (GROUNDED):** \"{score.evidence_quote[:200]}...\"")
                             else:
                                 st.warning(f"**Evidence (UNGROUNDED):** \"{score.evidence_quote[:200]}...\"")
-                                st.caption("⚠️ This quote was not found in the source text — may be paraphrased or hallucinated.")
+                                st.caption("⚠️ This quote was not found in the source text: may be paraphrased or hallucinated.")
                         
                         # Show grounded evidence details if available
                         if hasattr(score, 'grounded_evidence') and score.grounded_evidence:
@@ -1872,7 +1872,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
 
     # --- Tab 3: Detailed Report ---
     with tab3:
-        st.subheader("Investment Memo (Top 3)")
+        st.subheader("Short memo on the top 3")
 
         detailed_report = generate_detailed_report(
             seed_company=seed_company,
@@ -1883,7 +1883,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
 
     # --- Tab 4: Appendix (Review Results) ---
     with tab4:
-        st.subheader("📎 Appendix: Validation & Methodology")
+        st.subheader("📎 How each score was checked")
 
         review: ReviewResult = st.session_state.review_result
 
@@ -1914,7 +1914,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
             if review.seed_validations:
                 for v in review.seed_validations:
                     status_icon = "✅" if v.status == "verified" else "⚠️" if v.status == "unverified" else "❌"
-                    with st.expander(f"{status_icon} **{v.field.replace('_', ' ').title()}** — {v.status.upper()} ({v.confidence:.0%} confidence)"):
+                    with st.expander(f"{status_icon} **{v.field.replace('_', ' ').title()}**: {v.status.upper()} ({v.confidence:.0%} confidence)"):
                         st.markdown(f"**Our Claim:** {v.original_value}")
                         st.markdown(f"**Evidence:** {v.evidence}")
                         st.markdown(f"**Source:** {v.source_url}")
@@ -1932,7 +1932,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
                     exists_icon = "✅" if cv.exists else "❌"
                     similar_icon = "✅" if cv.similarity_valid else "⚠️"
 
-                    with st.expander(f"{exists_icon} **{cv.company_name}** — Exists: {cv.exists}, Similar: {cv.similarity_valid}"):
+                    with st.expander(f"{exists_icon} **{cv.company_name}** · exists: {cv.exists}, similar: {cv.similarity_valid}"):
                         col1, col2 = st.columns(2)
                         with col1:
                             st.markdown("**Existence Check:**")
@@ -1954,7 +1954,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
 
             if review.scoring_explanations:
                 for company_name, explanations in review.scoring_explanations.items():
-                    with st.expander(f"📊 **{company_name}** — Scoring Breakdown"):
+                    with st.expander(f"📊 **{company_name}**: Scoring Breakdown"):
                         for exp in explanations:
                             grounding_icon = "🔗" if exp.grounding_check == "grounded" else "⚠️"
                             score_display = f"{exp.score}/5" if exp.score else "N/A"
@@ -1983,7 +1983,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
             if scored_companies:
                 st.markdown("#### Signals Detected Per Company")
                 for company in scored_companies[:5]:
-                    with st.expander(f"🔍 **{company.search_result.name}** — Detected Signals"):
+                    with st.expander(f"🔍 **{company.search_result.name}**: Detected Signals"):
                         for dim_key, score in company.scores.items():
                             if score.signals_detected:
                                 st.markdown(f"**{SCORING_DIMENSIONS[dim_key]['label']}:** {', '.join(score.signals_detected)}")
@@ -1994,7 +1994,7 @@ if st.session_state.scoring_complete and st.session_state.scored_companies:
             st.info("Review results will appear here after running a search.")
 
 # ---------------------------------------------------------------------------
-# Save / Schedule Search — Shows AFTER results are displayed
+# Save / Schedule Search: Shows AFTER results are displayed
 # ---------------------------------------------------------------------------
 if st.session_state.get("show_save_nudge") and st.session_state.get("current_search_id"):
     st.divider()
@@ -2002,7 +2002,7 @@ if st.session_state.get("show_save_nudge") and st.session_state.get("current_sea
     # Display Share ID prominently for email sharing
     share_id = st.session_state.get("current_share_id")
     if share_id:
-        st.success(f"🔗 **Share ID: `{share_id}`** — Include this in email alerts so recipients can load results directly.")
+        st.success(f"🔗 **Share ID: `{share_id}`**. Include it in email alerts so recipients can open the results directly.")
     
     st.info("💡 **Want daily updates?** Schedule this search to run automatically and receive email reports.")
     
@@ -2065,7 +2065,7 @@ if st.session_state.get("show_save_nudge") and st.session_state.get("current_sea
             st.caption(f"Search ID: {st.session_state.current_search_id}")
 
 # ---------------------------------------------------------------------------
-# VC Analyst Chat — Bonus Feature (Collapsed by Default)
+# VC Analyst Chat: Bonus Feature (Collapsed by Default)
 # Only shows when user has target companies
 # ---------------------------------------------------------------------------
 
@@ -2073,10 +2073,10 @@ targets = get_target_list()
 if targets:
     st.divider()
     
-    # Collapsed expander — VC Chat is a BONUS, not the main feature
-    with st.expander("🧠 **Bonus: Ask the VC Analyst** — Get AI insights on the companies in your target list", expanded=False):
+    # Collapsed expander: VC Chat is a BONUS, not the main feature
+    with st.expander("🧠 **Bonus: ask an AI analyst** about the companies on your target list", expanded=False):
         st.caption("*Chat with a seasoned AI VC Analyst about your target companies*")
-        st.markdown("🔒 *Local / Sovereign AI chat coming soon — fully protected, on-premise processing*")
+        st.markdown("🔒 *Local / Sovereign AI chat coming soon: fully protected, on-premise processing*")
         
         # Model selection: Fast (default) vs Thinking
         col_model1, col_model2, col_show = st.columns([2, 1, 1])
@@ -2094,9 +2094,9 @@ if targets:
             )
         with col_model1:
             if use_thinking:
-                st.info("🧠 **Thinking Mode** — Deeper analysis")
+                st.info("🧠 **Thinking Mode**: Deeper analysis")
             else:
-                st.caption("⚡ **Fast Mode** — Quick responses")
+                st.caption("⚡ **Fast Mode**: Quick responses")
         
         # Initialize chat history in session state
         if "vc_chat_history" not in st.session_state:
@@ -2175,7 +2175,7 @@ if targets:
                 st.rerun()
 
 else:
-    # No results yet — show instructions
+    # No results yet: show instructions
     st.info(
         "👈 **Get started:** Select a seed company in the sidebar and click "
         "'Search & Score' to find similar MENAT startups."
@@ -2184,19 +2184,19 @@ else:
     # Show what the tool does
     with st.expander("ℹ️ How Alpha Scout Works"):
         st.markdown("""
-        1. **Select a Seed** — Choose a portfolio company or enter an inbound pitch
-        2. **Search** — Tavily finds up to 100 similar companies from trusted MENA sources
-        3. **Enrich** — 3 parallel agents find website, LinkedIn, and funding stage
-        4. **Filter** — Auto-filter by employee count (<100), MENA HQ, and stage (≤Series B)
-        5. **Score** — Gemini analyzes each company on 4 dimensions:
+        1. **Select a Seed**: Choose a portfolio company or enter an inbound pitch
+        2. **Search**: Tavily finds up to 100 similar companies from trusted MENA sources
+        3. **Enrich**: 3 parallel agents find website, LinkedIn, and funding stage
+        4. **Filter**: Auto-filter by employee count (<100), MENA HQ, and stage (≤Series B)
+        5. **Score**: Gemini analyzes each company on 4 dimensions:
            - **Offer Power** (Hormozi's Value Equation)
            - **Sales Ability** (traction evidence)
            - **Tech Moat** (defensibility)
            - **Founder Strength** (track record)
-        6. **Compare** — Side-by-side table with evidence quotes and source URLs
-        7. **Visualize** — Interactive 2x2 matrix to spot outliers
-        8. **VC Analyst** — AI chat with grounded analysis + VC interpretation
-        9. **Export** — PDF report or add to target list
+        6. **Compare**: Side-by-side table with evidence quotes and source URLs
+        7. **Visualize**: Interactive 2x2 matrix to spot outliers
+        8. **VC Analyst**: AI chat with grounded analysis + VC interpretation
+        9. **Export**: PDF report or add to target list
 
         **Grounding Guarantee:** Every score includes cited evidence. If data isn't
         available, the system returns "N/A" instead of guessing.

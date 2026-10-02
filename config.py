@@ -1,10 +1,10 @@
 """
-Configuration — Alpha Scout Product-Specific Data.
+Configuration: Alpha Scout Product-Specific Data.
 
 This module contains PRODUCT-SPECIFIC configuration for Alpha Scout:
-1. PORTFOLIO_COMPANIES — example portfolio (fictional seeds for similarity search)
-2. BENCHMARK_MENA_STARTUPS — Proven MENA companies for benchmarking
-3. SCOUT_MODES — Deal sourcing pipeline definitions
+1. PORTFOLIO_COMPANIES: example portfolio (fictional seeds for similarity search)
+2. BENCHMARK_MENA_STARTUPS: Proven MENA companies for benchmarking
+3. SCOUT_MODES: Deal sourcing pipeline definitions
 
 REUSABLE pipeline configuration (scoring dimensions, signals, defaults) is in:
     config_pipeline.py
@@ -104,35 +104,35 @@ PORTFOLIO_COMPANIES = {
 
 
 # ---------------------------------------------------------------------------
-# Scout Modes — 3 deal sourcing pipelines
+# Scout Modes: 3 deal sourcing pipelines
 # ---------------------------------------------------------------------------
 # Each mode defines how Alpha Scout finds companies to score.
 # All modes feed into the same scoring pipeline.
 
 SCOUT_MODES = {
     "portfolio": {
-        "label": "📁  Portfolio Benchmark",
-        "description": "Find early-stage startups similar to your existing portfolio companies",
-        "heading": "Scouting via Portfolio Benchmark",
-        "step1_title": "1. Select Portfolio Company",
+        "label": "📁  Like a company we own",
+        "description": "Find young startups similar to a company the fund already invested in",
+        "heading": "Startups similar to a company we own",
+        "step1_title": "1. Pick the company to use as a model",
     },
     "mena_success": {
-        "label": "🌟  MENA Success Stories",
-        "description": "Find pre-Series A startups similar to proven MENA companies (Series C+, IPO, M&A)",
-        "heading": "Scouting via MENA Success Stories",
-        "step1_title": "1. Select MENA Benchmark",
+        "label": "🌟  Like a regional success story",
+        "description": "Find startups before their first big funding round that look like Middle East and North Africa companies that already succeeded",
+        "heading": "Early versions of regional success stories",
+        "step1_title": "1. Pick a success story to use as a model",
     },
     "inbound": {
-        "label": "📥  Inbound Candidates",
-        "description": "Score and rank startups that pitched to you — from website or pitchdeck",
-        "heading": "Scoring Inbound Candidates",
-        "step1_title": "1. Add Candidate Companies",
+        "label": "📥  Companies that contacted us",
+        "description": "Score and rank startups that pitched to you, from their website or pitch deck",
+        "heading": "Scoring companies that contacted us",
+        "step1_title": "1. Add the companies",
     },
 }
 
 
 # ---------------------------------------------------------------------------
-# Benchmark MENA Startups — Successful companies used as reference points
+# Benchmark MENA Startups: Successful companies used as reference points
 # ---------------------------------------------------------------------------
 # These are proven MENA startups (Series C+, IPO, or M&A) used in Mode 2.
 # Alpha Scout finds EARLIER-STAGE companies solving similar problems.
@@ -153,7 +153,7 @@ BENCHMARK_MENA_STARTUPS = {
         # 4 Moat Attributes
         "tech_moat": "Proprietary MENA credit scoring model, 10M+ consumer data points, regulatory licenses",
         "tech_stack": "Machine learning credit models, real-time risk engine, merchant payment SDKs",
-        "offer_moat": "0% interest split payments with instant approval — no bank account required",
+        "offer_moat": "0% interest split payments with instant approval: no bank account required",
         "sales_distribution_moat": "2000+ merchant integrations, embedded at checkout on major MENA platforms",
     },
     "foodics": {
@@ -178,7 +178,7 @@ BENCHMARK_MENA_STARTUPS = {
         "website": "https://vezeeta.com",
         "achieved_stage": "Series D ($40M+ raised)",
         # 6 Eligibility Attributes
-        "problem_statement": "Healthcare access in MENA is fragmented — patients struggle to find, book, and pay for healthcare",
+        "problem_statement": "Healthcare access in MENA is fragmented: patients struggle to find, book, and pay for healthcare",
         "target_clients": "B2C: Patients; B2B: Clinics, hospitals, pharmacies, insurance companies",
         "industry_vertical": "HealthTech / Digital Health",
         "technology": "Doctor discovery, appointment booking, telemedicine, EHR integration, insurance APIs",
@@ -187,7 +187,7 @@ BENCHMARK_MENA_STARTUPS = {
         # 4 Moat Attributes
         "tech_moat": "Largest verified doctor database in MENA, patient data network effects, clinic software dependency",
         "tech_stack": "Mobile-first platform, telemedicine infrastructure, EHR APIs, insurance claims processing",
-        "offer_moat": "Free for patients, subscription for clinics — creates two-sided marketplace with strong retention",
+        "offer_moat": "Free for patients, subscription for clinics: creates two-sided marketplace with strong retention",
         "sales_distribution_moat": "3,500+ clinic partnerships, insurance integrations, telehealth partnerships",
     },
     "Sary": {
@@ -204,7 +204,7 @@ BENCHMARK_MENA_STARTUPS = {
         # 4 Moat Attributes
         "tech_moat": "Supplier data and pricing intelligence, proprietary logistics network, retailer financial data",
         "tech_stack": "Mobile-first marketplace, route optimization, inventory forecasting, BNPL for SMBs",
-        "offer_moat": "10-30% cheaper prices, next-day delivery, embedded credit — all from one app",
+        "offer_moat": "10-30% cheaper prices, next-day delivery, embedded credit: all from one app",
         "sales_distribution_moat": "Direct supplier contracts, field sales in major KSA cities, strong brand in baqala community",
     },
     "Unifonic": {
@@ -238,7 +238,7 @@ BENCHMARK_MENA_STARTUPS = {
         # 4 Moat Attributes
         "tech_moat": "Bank integration agreements, regulatory sandbox licenses, first-mover in GCC open banking",
         "tech_stack": "Banking APIs, OAuth flows, real-time payment rails, data normalization layer",
-        "offer_moat": "One API to connect to all MENA banks — replaces months of individual bank integrations",
+        "offer_moat": "One API to connect to all MENA banks: replaces months of individual bank integrations",
         "sales_distribution_moat": "Direct developer adoption, fintech community, Saudi SAMA and UAE CBUAE regulatory partnerships",
     },
 }

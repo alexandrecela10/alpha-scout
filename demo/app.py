@@ -87,9 +87,10 @@ if "demo_db_path" not in st.session_state:
 
 with st.sidebar:
     st.info(
-        f"**Demo.** Fictional portfolio seeds. Saved examples load free from *Load Previous Search*. "
-        f"Live searches: {max(0, m.SESSION_SEARCHES - st.session_state.get('demo_searches', 0))} left this visit, "
-        f"up to {m.MAX_RESULTS} companies each. Results name real companies found in public sources.  \n"
+        f"**Demo.** Finds young startups before they contact the fund. The model companies are made up. "
+        f"Start with *Open a saved search*: it's free. "
+        f"New searches: {max(0, m.SESSION_SEARCHES - st.session_state.get('demo_searches', 0))} left this visit, "
+        f"up to {m.MAX_RESULTS} companies each. Results are real companies found on public websites.  \n"
         f"[Video walkthrough]({VIDEO}) · [Case study]({CASE_STUDY})"
     )
 
