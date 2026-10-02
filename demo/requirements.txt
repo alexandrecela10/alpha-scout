@@ -1,10 +1,13 @@
 # Alpha Scout public demo. Streamlit Community Cloud reads this file because
-# it sits next to the entrypoint (demo/app.py).
+# it sits next to the entrypoint (demo/app.py). The demo runs the full app,
+# so this mirrors the root requirements.txt.
 streamlit>=1.30.0
-pandas>=2.0.0
 google-genai>=1.0.0
+langfuse>=2.0.0          # tracing stays off without keys
 tavily-python>=0.3.0
-langfuse>=2.0.0,<3.0.0   # imported by tracing; stays off without keys
+plotly>=5.18.0
+fpdf2>=2.7.0
+pandas>=2.0.0
+openpyxl>=3.1.0
 requests>=2.31.0
 python-dotenv>=1.0.0
-plotly>=5.18.0
