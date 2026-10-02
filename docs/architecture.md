@@ -5,7 +5,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              ALPHA SCOUT                                     │
-│                     "For the courageous investor"                           │
+│                     "Outbound deal sourcing"                                │
 └─────────────────────────────────────────────────────────────────────────────┘
 
                                     │
@@ -13,7 +13,7 @@
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                           1. USER INPUT (app.py)                            │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│  • Select seed company (from Jasoor portfolio)                              │
+│  • Select seed company (from portfolio)                                     │
 │  • Define similarity criteria (problem, clients, industry, tech, etc.)      │
 │  • Set geographic focus (MENA/GCC)                                          │
 │  • Configure search sources                                                 │

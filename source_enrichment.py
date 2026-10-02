@@ -199,7 +199,7 @@ def fetch_page_content(url: str) -> Tuple[bool, str, str]:
     """
     try:
         headers = {
-            "User-Agent": "Mozilla/5.0 (compatible; AlphaScout/1.0; +https://jasoor.vc)"
+            "User-Agent": "Mozilla/5.0 (compatible; AlphaScout/1.0; +https://github.com/alexandrecela10/alpha-scout)"
         }
         response = requests.get(url, headers=headers, timeout=HTTP_TIMEOUT, allow_redirects=True)
         response.raise_for_status()

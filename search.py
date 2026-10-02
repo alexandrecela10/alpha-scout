@@ -42,7 +42,7 @@ def validate_grounding(company_name: str, source_content: str) -> bool:
     that aren't mentioned in the source URL.
     
     Uses case-insensitive exact matching with fuzzy tolerance for
-    common variations (e.g., "Byanat" vs "Byanat AI").
+    common variations (e.g., "Portfolio A" vs "Portfolio A Ltd").
     """
     if not company_name or not source_content:
         return False
@@ -140,7 +140,7 @@ def build_search_query(
         target_stage: Target funding stage filter ("early-stage", "seed", "series-a", etc.)
 
     Example output:
-    "early-stage startup seed series-A fintech UAE Saudi MENA similar to Byanat"
+    "early-stage startup seed series-A fintech UAE Saudi MENA similar to Portfolio A"
 
     Why this format? Tavily works best with natural language queries.
     We bake in stage + location filters for more precise results.

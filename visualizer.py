@@ -134,7 +134,7 @@ def create_matrix_plot(
     # Add quadrant labels
     _add_quadrant_labels(fig, x_axis, y_axis)
 
-    # Layout - Jasoor dark theme
+    # Layout - dark theme
     fig.update_layout(
         title=dict(text=title, font=dict(size=18, color="#ffffff")),
         xaxis=dict(

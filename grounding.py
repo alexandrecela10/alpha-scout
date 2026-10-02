@@ -49,7 +49,7 @@ class GroundedEvidence:
     The snippet fields show the ACTUAL text from the source,
     not what the AI claimed. This is the hard proof.
     """
-    claim: str                          # What the AI claimed (e.g., "Byanat AI")
+    claim: str                          # What the AI claimed (e.g., "Portfolio A")
     claim_field: str                    # Which field this is (e.g., "company_name", "website")
     source_url: str                     # URL where we looked for evidence
     source_text: str                    # Full source text we searched in

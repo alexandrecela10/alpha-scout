@@ -1,6 +1,6 @@
 # Alpha Scout — AI-Powered Startup Sourcing for MENA
 
-> *"For the courageous investor"* — Jasoor Ventures
+> Outbound deal sourcing for early-stage VC. [Live demo and case study](https://alexandrecela10.github.io/projects/alpha-scout/)
 
 AI-powered tool that discovers, enriches, and scores early-stage startups in the **MENA** region using grounded real-time data.
 
@@ -27,7 +27,7 @@ AI-powered tool that discovers, enriches, and scores early-stage startups in the
   │                      search.py                                            │
   │                                                                           │
   │  Query has stage + MENA filters BAKED IN:                                │
-  │  "early-stage startup seed series-A similar to Byanat fintech            │
+  │  "early-stage startup seed series-A similar to Portfolio A fintech       │
   │   MENA UAE Saudi Arabia Egypt Jordan"                                    │
   │                                                                           │
   │  • Searches ONLY user-selected source domains                            │

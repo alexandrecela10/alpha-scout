@@ -2,7 +2,7 @@
 Configuration — Alpha Scout Product-Specific Data.
 
 This module contains PRODUCT-SPECIFIC configuration for Alpha Scout:
-1. PORTFOLIO_COMPANIES — Jasoor's current investments (seeds for similarity search)
+1. PORTFOLIO_COMPANIES — example portfolio (fictional seeds for similarity search)
 2. BENCHMARK_MENA_STARTUPS — Proven MENA companies for benchmarking
 3. SCOUT_MODES — Deal sourcing pipeline definitions
 
@@ -10,11 +10,11 @@ REUSABLE pipeline configuration (scoring dimensions, signals, defaults) is in:
     config_pipeline.py
 
 Why this split?
-- config.py = Product-specific data (Jasoor portfolio, MENA benchmarks)
+- config.py = Product-specific data (example portfolio, MENA benchmarks)
 - config_pipeline.py = Reusable pipeline config (scoring, signals, sources)
 
 Other products (due diligence, portfolio augmentation) can import from
-config_pipeline.py without needing Jasoor-specific data.
+config_pipeline.py without needing fund-specific data.
 """
 
 # Import reusable pipeline configuration
@@ -31,7 +31,7 @@ from config_pipeline import (
 )
 
 # ---------------------------------------------------------------------------
-# Jasoor Portfolio Companies (Seeds)
+# Example Portfolio Companies (fictional seeds)
 # ---------------------------------------------------------------------------
 # Each company has 6 structured attributes used for eligibility search:
 # 1. problem_statement - What pain point does the company solve?
@@ -44,69 +44,61 @@ from config_pipeline import (
 # These attributes are editable in the UI and drive the similarity search.
 
 PORTFOLIO_COMPANIES = {
-    "4401 Earth": {
-        "description": "Carbon removal technology using mineralisation to permanently store CO₂ in rocks",
-        "website": "https://www.4401.earth",
-        # 6 Eligibility Attributes
-        "problem_statement": "Climate change requires permanent carbon removal solutions that are safe, scalable, and affordable",
-        "target_clients": "B2B: Corporations seeking carbon credits, energy companies, governments, ESG-focused enterprises",
-        "industry_vertical": "Climate Tech / Carbon Removal",
-        "technology": "CO₂ mineralisation, peridotite rock injection, carbon capture and storage (CCS)",
-        "location": "Oman / GCC / MENA",
-        "company_size": "Growth stage, 50-100 employees, Series B funded",
-        # 4 Moat Attributes
-        "tech_moat": "Proprietary mineralisation process patents, first-mover in Oman's peridotite geology",
-        "tech_stack": "Geochemical monitoring systems, environmental sensors, carbon accounting software",
-        "offer_moat": "Permanent carbon removal (not offset) at competitive cost — only solution using natural rock chemistry",
-        "sales_distribution_moat": "Direct enterprise contracts, government partnerships, carbon credit registry integrations",
+    "Portfolio A (freight logistics)": {
+        "description": "Digital freight platform matching shippers with trucking fleets",
+        "website": "https://portfolio-a.example",
+        "problem_statement": "Shippers book trucks by phone and trucks run empty on return legs",
+        "target_clients": "B2B: manufacturers, distributors, trucking fleets",
+        "industry_vertical": "Logistics / Freight Tech",
+        "technology": "Load matching, route pricing, fleet tracking app",
+        "location": "GCC / MENA",
+        "company_size": "Seed to Series A, 20-60 employees",
+        "tech_moat": "Lane-level pricing data from completed loads",
+        "tech_stack": "Mobile apps, GPS telematics, pricing models",
+        "offer_moat": "Instant quotes and fewer empty return trips",
+        "sales_distribution_moat": "Direct sales to shippers, fleet onboarding network",
     },
-    "Byanat AI": {
-        "description": "Unified AI platform for optimising digital infrastructure across telecoms and data centres",
-        "website": "https://www.byanat.ai",
-        # 6 Eligibility Attributes
-        "problem_statement": "Telecoms and data centres lack visibility into infrastructure performance, leading to inefficiencies and revenue leaks",
-        "target_clients": "B2B: Telecom operators, data centre providers, utilities, defence, smart city operators",
-        "industry_vertical": "Deep Tech / AI / Infrastructure 4.0",
-        "technology": "Predictive AI analytics, autonomous networks, low-code console, multi-vendor integration, API automation",
-        "location": "Oman / Bahrain / GCC",
-        "company_size": "Growth stage, award-winning, established leadership in smart city infrastructure",
-        # 4 Moat Attributes
-        "tech_moat": "Proprietary AI models trained on telecom network data, multi-vendor integrations with high switching costs",
-        "tech_stack": "Machine learning, big data pipelines, REST APIs, low-code console, real-time monitoring",
-        "offer_moat": "Single platform replacing multiple point solutions — engineers save hours daily with AI automation",
-        "sales_distribution_moat": "Direct enterprise sales to tier-1 telecoms, government contracts, GCC channel partners",
+    "Portfolio B (embedded insurance)": {
+        "description": "Insurance APIs that let online merchants sell cover at checkout",
+        "website": "https://portfolio-b.example",
+        "problem_statement": "Online buyers can't add product or travel cover at the point of sale",
+        "target_clients": "B2B2C: e-commerce platforms, travel sites, insurers",
+        "industry_vertical": "Insurtech",
+        "technology": "Insurance APIs, policy issuance, claims workflow",
+        "location": "GCC / MENA",
+        "company_size": "Seed, 10-40 employees",
+        "tech_moat": "Integrations with several insurers behind one API",
+        "tech_stack": "REST APIs, payments integration, claims automation",
+        "offer_moat": "Merchants add cover with one integration",
+        "sales_distribution_moat": "Partnerships with e-commerce platforms and insurers",
     },
-    "Tabsense": {
-        "description": "Smart restaurant management platform with AI-powered POS and operations automation",
-        "website": "https://tabsense.com",
-        # 6 Eligibility Attributes
-        "problem_statement": "Restaurants struggle with fragmented operations, manual processes, and lack of data-driven insights",
-        "target_clients": "B2B: Restaurants, cafes, F&B chains, hospitality groups, QSR franchises",
-        "industry_vertical": "FoodTech / Restaurant SaaS",
-        "technology": "AI-powered POS, operations automation, inventory management, analytics dashboard",
+    "Portfolio C (Arabic edtech)": {
+        "description": "Online tutoring and practice platform for Arabic-speaking school students",
+        "website": "https://portfolio-c.example",
+        "problem_statement": "Families pay for private tutoring with no way to track progress",
+        "target_clients": "B2C: parents and students; B2B: private schools",
+        "industry_vertical": "Edtech / K-12",
+        "technology": "Live tutoring, adaptive practice, progress reports",
+        "location": "Saudi Arabia / Egypt / MENA",
+        "company_size": "Pre-seed to seed, 10-30 employees",
+        "tech_moat": "Arabic curriculum-aligned question bank",
+        "tech_stack": "Web and mobile apps, video, recommendation engine",
+        "offer_moat": "Curriculum-aligned and cheaper than private tutors",
+        "sales_distribution_moat": "School partnerships, parent referrals",
+    },
+    "Portfolio D (property management)": {
+        "description": "Property management software for landlords and residential operators",
+        "website": "https://portfolio-d.example",
+        "problem_statement": "Landlords track rent, leases and maintenance in spreadsheets",
+        "target_clients": "B2B: landlords, property managers, residential operators",
+        "industry_vertical": "Proptech",
+        "technology": "Rent collection, lease management, maintenance tickets",
         "location": "UAE / GCC",
-        "company_size": "Early-stage, seed/Series A, 10-30 employees",
-        # 4 Moat Attributes
-        "tech_moat": "Integrated POS + inventory + analytics creates data lock-in, switching costs are high",
-        "tech_stack": "Cloud SaaS, mobile POS, IoT integrations, real-time analytics, payment processing APIs",
-        "offer_moat": "All-in-one Arabic-native restaurant OS replacing 3-4 separate tools at lower total cost",
-        "sales_distribution_moat": "Direct SMB and enterprise sales in GCC, F&B association partnerships",
-    },
-    "Kitchenomiks": {
-        "description": "Smart cloud kitchen platform enabling F&B businesses to scale through delivery",
-        "website": "https://kitchenomiks.com",
-        # 6 Eligibility Attributes
-        "problem_statement": "F&B businesses want to expand geographically but lack kitchen infrastructure and delivery capabilities",
-        "target_clients": "B2B: Restaurant brands, food entrepreneurs, F&B franchises wanting delivery expansion",
-        "industry_vertical": "FoodTech / Cloud Kitchens",
-        "technology": "Smart kitchen platform, multi-aggregator order management, supply chain automation, last-mile delivery integration",
-        "location": "Saudi Arabia / UAE / GCC",
-        "company_size": "Early-stage, seed funded, 20-50 employees",
-        # 4 Moat Attributes
-        "tech_moat": "Physical kitchen infrastructure + software platform creates high switching costs for tenants",
-        "tech_stack": "Order management system, aggregator APIs (Talabat, Deliveroo, Jahez), supply chain software",
-        "offer_moat": "Launch a delivery brand in 30 days with no CAPEX — kitchen, staff, supply chain included",
-        "sales_distribution_moat": "Aggregator partnerships, F&B brand network effects, geographic kitchen expansion",
+        "company_size": "Seed, 10-30 employees",
+        "tech_moat": "Payment and lease data across a growing unit base",
+        "tech_stack": "Cloud SaaS, payments APIs, tenant mobile app",
+        "offer_moat": "One system for rent, leases and maintenance",
+        "sales_distribution_moat": "Direct sales to operators, brokerage partnerships",
     },
 }
 

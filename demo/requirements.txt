@@ -1,0 +1,10 @@
+# Alpha Scout public demo. Streamlit Community Cloud reads this file because
+# it sits next to the entrypoint (demo/app.py).
+streamlit>=1.30.0
+pandas>=2.0.0
+google-genai>=1.0.0
+tavily-python>=0.3.0
+langfuse>=2.0.0,<3.0.0   # imported by tracing; stays off without keys
+requests>=2.31.0
+python-dotenv>=1.0.0
+plotly>=5.18.0

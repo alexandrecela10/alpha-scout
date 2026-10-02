@@ -1,5 +1,5 @@
 # ============================================================
-# Jasoor Alpha Scout — Python Dependencies
+# Alpha Scout — Python Dependencies
 # ============================================================
 
 # --- UI Framework ---

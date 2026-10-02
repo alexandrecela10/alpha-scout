@@ -1,5 +1,5 @@
 """
-Jasoor Alpha Scout — Streamlit UI
+Alpha Scout — Streamlit UI
 
 This is the main entry point. Run with: streamlit run app.py
 
@@ -81,7 +81,7 @@ if "langfuse_user_id" not in st.session_state:
 # ---------------------------------------------------------------------------
 
 st.set_page_config(
-    page_title="Alpha Scout — Jasoor Ventures",
+    page_title="Alpha Scout",
     page_icon="🎯",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -107,13 +107,13 @@ if "share_id" in query_params and st.session_state.auto_loaded_share_id != query
         st.error(f"❌ Share ID not found: {share_id}")
 
 # ---------------------------------------------------------------------------
-# Jasoor Brand Styling
+# Brand Styling
 # ---------------------------------------------------------------------------
-# Colors from jasoor.vc: deep navy background, mint/teal accent
+# Colors: deep navy background, mint/teal accent
 
 st.markdown("""
 <style>
-    /* Main background - deep navy like Jasoor */
+    /* Main background - deep navy */
     .stApp {
         background: #0f0f23 !important;
     }
@@ -148,7 +148,7 @@ st.markdown("""
         color: #7dd3c0 !important;
     }
     
-    /* Primary buttons - mint/teal rounded like Jasoor */
+    /* Primary buttons - mint/teal rounded */
     .stButton > button[kind="primary"], 
     .stButton > button[data-testid="baseButton-primary"] {
         background: #7dd3c0 !important;
@@ -288,8 +288,8 @@ st.markdown("""
         border: 1px solid #ffc107 !important;
     }
     
-    /* Jasoor title styling */
-    .jasoor-title {
+    /* Title styling */
+    .app-title {
         font-family: 'Georgia', serif;
         font-size: 1.5rem;
         color: #7dd3c0 !important;
@@ -298,7 +298,7 @@ st.markdown("""
         text-transform: uppercase;
     }
     
-    .jasoor-subtitle {
+    .app-subtitle {
         color: #888888 !important;
         font-size: 0.85rem;
         font-style: italic;
@@ -356,8 +356,8 @@ init_db()
 # ---------------------------------------------------------------------------
 
 with st.sidebar:
-    st.markdown('<p class="jasoor-title">ALPHA SCOUT</p>', unsafe_allow_html=True)
-    st.markdown('<p class="jasoor-subtitle">For the courageous investor</p>', unsafe_allow_html=True)
+    st.markdown('<p class="app-title">ALPHA SCOUT</p>', unsafe_allow_html=True)
+    st.markdown('<p class="app-subtitle">Outbound deal sourcing</p>', unsafe_allow_html=True)
 
     st.divider()
     
@@ -443,7 +443,7 @@ with st.sidebar:
         seed_company = st.selectbox(
             "Portfolio company to benchmark against:",
             options=list(PORTFOLIO_COMPANIES.keys()),
-            help="Select a Jasoor portfolio company as your reference point.",
+            help="Select a portfolio company as your reference point.",
         )
         benchmark_label = seed_company
     else:
@@ -1208,7 +1208,7 @@ with st.sidebar:
                 os.remove(pdf_path)
 
         with col3:
-            email_to = st.text_input("Email to:", placeholder="investor@jasoor.com")
+            email_to = st.text_input("Email to:", placeholder="investor@fund.example")
             if st.button("📧 Send Email", use_container_width=True):
                 if email_to:
                     with st.spinner("Sending..."):
@@ -2017,7 +2017,7 @@ if st.session_state.get("show_save_nudge") and st.session_state.get("current_sea
             )
             schedule_email = st.text_input(
                 "Email for reports:",
-                placeholder="analyst@jasoor.vc",
+                placeholder="analyst@fund.example",
                 key="schedule_email",
             )
         
@@ -2214,10 +2214,10 @@ st.markdown("""
         ALPHA SCOUT
     </p>
     <p style="color: #666666; font-size: 0.8rem;">
-        Jasoor Ventures © 2026 | Powered by Gemini + Tavily | Observability via Langfuse
+        © Alexandre Cela 2026 | Powered by Gemini + Tavily | Observability via Langfuse
     </p>
     <p style="color: #7dd3c0; font-size: 0.75rem; font-style: italic; font-family: Georgia, serif;">
-        For the courageous.
+        
     </p>
 </div>
 """, unsafe_allow_html=True)
